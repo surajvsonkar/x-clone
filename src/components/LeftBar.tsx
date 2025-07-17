@@ -89,7 +89,18 @@ const LeftBar = () => {
                 </Link>
                 <Link href={'/'} className='hidden xxl:block bg-white text-black rounded-full font-bold py-2 px-20' >POST</Link>
 			</div>
-			<div className="">User</div>
+			<div className="flex items-center justify-between">
+				<div className='flex items-center gap-2'>
+					<div className='w-10 h-10 relative rounded-full overflow-hidden'>
+						<Image src="/general/avatar.png" alt='surajvsonkar' fill/>
+					</div>
+					<div className='hidden xxl:flex flex-col'>
+						<span className='font-bold '>surajvsonkar</span>
+						<span className='text-sm text-gray-100'>@surajvsonkar</span>
+					</div>
+				</div>
+				<div className='hidden xxl:block cursor-pointer font-bold'>...</div>
+			</div>
 		</div>
 	);
 };
