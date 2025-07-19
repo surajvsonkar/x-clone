@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Atomik Growth</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--primary: #464775;
+				--secondary: #a16b5d;
+				--background: #0a0a0a;
+				--btn-bg: #111010;
+				--btn-hover: #232222;
+				--highlight-blue: #464775cc;
+				--highlight-brown: #a16b5dcc;
+				--nav-btn: #fff;
+			}
+
+			body {
+				margin: 0;
+				font-family: 'Montserrat', Arial, sans-serif;
+				background: var(--background);
+				color: #fff;
+				min-height: 100vh;
+			}
+
+			.navbar {
+				width: 100vw;
+				padding: 24px 0 16px 0;
+				background: var(--background);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				position: relative;
+				box-sizing: border-box;
+			}
+
+			.navbar-left {
+				display: flex;
+				align-items: center;
+				margin-left: 60px;
+			}
+
+			.logo {
+				font-size: 1.6rem;
+				font-weight: 600;
+				letter-spacing: 0.02em;
+			}
+
+			.brand-accent {
+				color: var(--primary);
+				font-weight: 700;
+			}
+
+			.navbar-center {
+				display: flex;
+				gap: 48px;
+			}
+
+			.navbar-center a {
+				color: #fff;
+				text-decoration: none;
+				font-size: 1.1rem;
+				font-weight: 500;
+				letter-spacing: 0.03em;
+				padding: 4px 0;
+				transition: color 0.2s;
+				border: none;
+				background: none;
+				cursor: pointer;
+			}
+			.navbar-center a:hover {
+				color: var(--primary);
+			}
+
+			.navbar-right {
+				margin-right: 60px;
+			}
+
+			.book-call-btn {
+				border: 1.5px solid #fff;
+				background: transparent;
+				color: #fff;
+				border-radius: 28px;
+				padding: 10px 32px;
+				font-size: 1.05rem;
+				font-weight: bold;
+				letter-spacing: 0.05em;
+				cursor: pointer;
+				transition: background 0.22s, color 0.22s;
+				outline: none;
+			}
+			.book-call-btn:hover {
+				background: #fff2;
+				color: #fff;
+			}
+
+			.hero {
+				padding-top: 60px;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: center;
+				width: 100%;
+				max-width: 1500px;
+				margin: 0 auto;
+				min-height: 390px;
+			}
+
+			.headline {
+				line-height: 1.08;
+				font-weight: 500;
+				font-size: 5vw;
+				letter-spacing: -0.03em;
+				margin-bottom: 0.1em;
+				margin-top: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			.headline .highlight-blue {
+				background: linear-gradient(
+					90deg,
+					var(--highlight-blue) 80%,
+					#34344a 100%
+				);
+				color: #fff;
+				padding: 0.03em 0.24em 0.06em 0.24em;
+				display: inline-block;
+				border-radius: 6px 6px 0 0;
+				margin-bottom: 10px;
+			}
+			.headline .highlight-brown {
+				background: linear-gradient(
+					90deg,
+					var(--highlight-brown) 80%,
+					#6d4132 100%
+				);
+				color: #fff;
+				padding: 0.03em 0.24em 0.06em 0.24em;
+				border-radius: 0 0 8px 8px;
+				display: inline-block;
+				margin-bottom: 0.1em;
+			}
+
+			/* About Us button */
+			.about-card {
+				margin: 56px auto 0;
+				max-width: 700px;
+				background: none;
+				border: 1.5px solid #333;
+				padding: 40px 36px 36px 36px;
+				border-radius: 32px;
+				box-sizing: border-box;
+				position: relative;
+				color: #bba;
+			}
+			.about-btn {
+				position: absolute;
+				top: -20px;
+				left: 28px;
+				background: var(--secondary);
+				color: #fff;
+				border: none;
+				border-radius: 24px;
+				padding: 8px 26px;
+				font-size: 1rem;
+				font-weight: bold;
+				letter-spacing: 0.04em;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+				cursor: pointer;
+			}
+
+			/* Responsive improvements */
+			@media (max-width: 900px) {
+				.headline {
+					font-size: 8vw;
+				}
+				.navbar-left,
+				.navbar-right {
+					margin-left: 24px;
+					margin-right: 24px;
+				}
+				.about-card {
+					padding: 32px 18px;
+				}
+			}
+
+			@media (max-width: 600px) {
+				.navbar-center {
+					gap: 20px;
+				}
+				.headline {
+					font-size: 10vw;
+				}
+				.navbar-left,
+				.navbar-right {
+					margin-left: 8px;
+					margin-right: 8px;
+				}
+				.about-card {
+					padding: 20px 5px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="navbar-left">
+				<span class="logo"
+					>Atomik <span class="brand-accent">Growth</span></span
+				>
+			</div>
+			<div class="navbar-center">
+				<a href="#">SERVICES &#8595;</a>
+				<a href="#">ABOUT US</a>
+				<a href="#">CASE STUDIES</a>
+			</div>
+			<div class="navbar-right">
+				<button class="book-call-btn">BOOK A CALL</button>
+			</div>
+		</nav>
+
+		<section class="hero">
+			<div class="headline">
+				<span class="highlight-blue">Great Guests Deserve</span>
+				<span class="highlight-brown">Great Distribution</span>
+			</div>
+		</section>
+
+		<div class="about-card">
+			<button class="about-btn">ABOUT US</button>
+			Atomik Growth is a full-service podcast partner for top voices in tech,
+			founders, investors, and operators with something to say.
+		</div>
+	</body>
+</html>
