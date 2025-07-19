@@ -104,11 +104,11 @@ const LeftBar = () => {
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<div className="w-10 h-10 relative rounded-full overflow-hidden">
-						<Image path="/general/avatar.png" alt="surajvsonkar" width={100} tr={true} />
+						<Image path="/general/avatar.png" alt="msurajhu" width={100} tr={true} />
 					</div>
 					<div className="hidden xxl:flex flex-col">
-						<span className="font-bold ">surajvsonkar</span>
-						<span className="text-sm text-gray-100">@surajvsonkar</span>
+						<span className="font-bold ">msurajhu</span>
+						<span className="text-sm text-gray-100">@msurajhu</span>
 					</div>
 				</div>
 				<div className="hidden xxl:block cursor-pointer font-bold">...</div>

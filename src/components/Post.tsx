@@ -52,7 +52,7 @@ const Post = async (fileId: string) => {
 					<div className="flex justify-between items-center gap-2">
 						<div className="flex items-center gap-2 flex-wrap">
 							<h1 className="text-md font-bold">suraj sonkar</h1>
-							<span className="text-textGray">@surajvsonkar</span>
+							<span className="text-textGray">@msurajhu</span>
 							<span className="text-textGray">1 day ago</span>
 						</div>
 						<PostInfo />
