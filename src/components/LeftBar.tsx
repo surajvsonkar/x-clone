@@ -66,7 +66,7 @@ const menuList = [
 
 const LeftBar = () => {
 	return (
-		<div className="h-screen sticky flex flex-col justify-between pt-2 pb-8">
+		<div className="top-0 h-screen sticky flex flex-col justify-between pt-2 pb-8">
 			<div className="flex flex-col gap-4 text-lg items-center xxl:items-start">
 				<Link href="/" className="p-2 rounded-full hover:bg-[#181818]">
 					<Image path={'icons/logo.svg'} alt="logo" width={24} height={24} />
