@@ -2,6 +2,7 @@ import { imageKit } from '@/utils';
 import Image from './Image';
 import PostInfo from './PostInfo';
 import PostInteraction from './PostInteraction';
+import Video from './Video';
 
 interface FileDetailsResponseTypes {
 	width: number;
@@ -24,7 +25,7 @@ const Post = async (fileId: string) => {
 		});
 	};
 
-	const fileDetails = await getFileDetails('687bbc0c5c7cd75eb86e507f');
+	const fileDetails = await getFileDetails('687bedde5c7cd75eb8b690e7');
 	// console.log(fileDetails)
 
 	return (
@@ -64,7 +65,7 @@ const Post = async (fileId: string) => {
 					</p>
 					{/* <Image path={fileDetails.filePath} alt="" width={600} height={600} className={fileDetails.customMetadata.sensitive ? " blur-md" : ""} />
 					<PostInteraction /> */}
-					{fileDetails && (
+					{fileDetails && fileDetails.fileType === "image" ? (
 						<Image
 							path={fileDetails.filePath}
 							width={fileDetails.width}
@@ -72,7 +73,13 @@ const Post = async (fileId: string) => {
 							alt=""
 							className={fileDetails.customMetadata.sensitive ? ' blur-md' : ''}
 						/>
+					) : (
+						<Video
+							path={fileDetails.filePath}
+							className={fileDetails.customMetadata.sensitive ? ' blur-md' : ''}
+						/>
 					)}
+					<PostInteraction />
 				</div>
 			</div>
 		</div>
