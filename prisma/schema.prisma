@@ -1,0 +1,88 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      String @id 
+  email   String @unique
+  username String @unique
+  displayName String?
+  bio  String?
+  location String?
+  job String?
+  website String?
+  img String?
+  cover String?
+  posts   Post[]
+  likes   Like[]
+  saves   SavedPosts[]
+  followers Follow[] @relation("UserFollowers")
+  following Follow[] @relation("UserFollowings")
+}
+
+model Post {
+  id             Int        @id @default(autoincrement())
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  description    String?    @db.VarChar(255)
+  img            String?
+  video          String?
+  isSensitive    Boolean    @default(false)
+
+  // RELATIONS
+  user           User       @relation(fields: [userId], references: [id])
+  userId         String
+
+  rePostId       Int?
+  rePost         Post?      @relation("Reposts",fields: [rePostId], references: [id])
+  rePosts        Post[]     @relation("Reposts")
+
+  parentPostId   Int?
+  partentPost    Post?      @relation("PostComments", fields: [parentPostId], references: [id])
+  comments       Post[]     @relation("PostComments")
+
+  likes Like[]
+  saves SavedPosts[]
+
+}
+
+model Like {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  // RELATIONS
+  userId String
+  postId Int
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+}
+
+model SavedPosts {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  userId String
+  postId Int
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+}
+
+model Follow {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  // RELATIONS
+  followerId String
+  followingId String
+
+  follower User @relation("UserFollowers",fields: [followerId], references: [id])
+  following User @relation("UserFollowings",fields: [followingId], references: [id])
+}

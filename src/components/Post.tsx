@@ -3,6 +3,7 @@ import Image from './Image';
 import PostInfo from './PostInfo';
 import PostInteraction from './PostInteraction';
 import Video from './Video';
+import Link from 'next/link';
 
 interface FileDetailsResponseTypes {
 	width: number;
@@ -13,14 +14,14 @@ interface FileDetailsResponseTypes {
 	customMetadata: { sensitive: boolean };
 }
 
-const Post = async (fileId: string) => {
+const Post = async ({ type }: { type?: 'status' | 'comment' }) => {
 	const getFileDetails = async (
 		fileId: string
 	): Promise<FileDetailsResponseTypes> => {
 		return new Promise((resolve, reject) => {
-			imageKit.getFileDetails(fileId, (err, result) => {
+			imageKit.getFileDetails(fileId, (err: any, result) => {
 				if (err) reject(err);
-				else resolve(result as FileDetailsResponseTypes);
+				else resolve(result as unknown as FileDetailsResponseTypes);
 			});
 		});
 	};
@@ -44,28 +45,54 @@ const Post = async (fileId: string) => {
 				</svg>
 				<span>Suraj reposted</span>
 			</div>
-			<div className="flex gap-4">
-				<div className="relative w-10 h-10 rounded-full overflow-hidden">
+			<div className={`flex gap-4 ${type === 'status' && 'flex-col'}`}>
+				<div
+					className={`${
+						type === 'status' && 'hidden'
+					} relative w-10 h-10 rounded-full overflow-hidden`}
+				>
 					<Image path="general/avatar.png" alt="" width={100} height={100} />
 				</div>
 				<div className="flex-1 flex flex-col gap-2">
-					<div className="flex justify-between items-center gap-2">
-						<div className="flex items-center gap-2 flex-wrap">
-							<h1 className="text-md font-bold">suraj sonkar</h1>
-							<span className="text-textGray">@msurajhu</span>
-							<span className="text-textGray">1 day ago</span>
-						</div>
+					<div className="w-full flex justify-between">
+						<Link href={'/surajvsonkar'} className="flex gap-4">
+							<div
+								className={`${
+									type !== 'status' && 'hidden'
+								} relative w-10 h-10 rounded-full overflow-hidden`}
+							>
+								<Image
+									path="general/avatar.png"
+									alt=""
+									width={100}
+									height={100}
+								/>
+							</div>
+							<div
+								className={`flex items-center gap-2 flex-wrap ${
+									type === 'status' && 'flex-col gap-0 !items-start'
+								}`}
+							>
+								<h1 className="text-md font-bold">suraj sonkar</h1>
+								<span className="text-textGray">@msurajhu</span>
+								{type !== 'status' && (
+									<span className="text-textGray">1 day ago</span>
+								)}
+							</div>
+						</Link>
 						<PostInfo />
 					</div>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-						quasi, pariatur temporibus aliquid velit deleniti, quas ipsam
-						deserunt eos officia esse amet labore natus repellat nihil!
-						Necessitatibus nostrum laborum quaerat?
-					</p>
+					<Link href={"surajvsonkar/status/123"}>
+						<p className={`${type === 'status' && 'text-lg'}`}>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
+							quasi, pariatur temporibus aliquid velit deleniti, quas ipsam
+							deserunt eos officia esse amet labore natus repellat nihil!
+							Necessitatibus nostrum laborum quaerat?
+						</p>
+					</Link>
 					{/* <Image path={fileDetails.filePath} alt="" width={600} height={600} className={fileDetails.customMetadata.sensitive ? " blur-md" : ""} />
 					<PostInteraction /> */}
-					{fileDetails && fileDetails.fileType === "image" ? (
+					{fileDetails && fileDetails.fileType === 'image' ? (
 						<Image
 							path={fileDetails.filePath}
 							width={fileDetails.width}
@@ -79,6 +106,7 @@ const Post = async (fileId: string) => {
 							className={fileDetails.customMetadata.sensitive ? ' blur-md' : ''}
 						/>
 					)}
+					{type === "status" && <span className='text-textGray'>12:31 AM - Jul 21, 2025</span>}
 					<PostInteraction />
 				</div>
 			</div>
