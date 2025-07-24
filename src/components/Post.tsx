@@ -26,7 +26,7 @@ const Post = async ({ type }: { type?: 'status' | 'comment' }) => {
 		});
 	};
 
-	const fileDetails = await getFileDetails('687bedde5c7cd75eb8b690e7');
+	const fileDetails = await getFileDetails('687b5ba55c7cd75eb8fcc152');
 	// console.log(fileDetails)
 
 	return (
