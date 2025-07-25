@@ -1,6 +1,8 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
+import InfiniteScroll from 'react-infinite-scroll-component'
+import Post from './Post';
 
 const fetchPosts = async (pageParam:number,userProfileId?:string) => {
 	const res = await fetch('http://localhost:3000/api/posts?cursor='+pageParam+"&user="+userProfileId);
@@ -19,5 +21,11 @@ export const InfiniteFeed = ({ userProfileId }: { userProfileId?: string }) => {
     if(status === "pending") return "Loading...."
 
     console.log(data)
-	return <div>InfiniteFeed</div>;
+
+    const allPosts = data?.pages?.flatMap(page=>page.posts) || []
+	return <InfiniteScroll dataLength={allPosts.length} next={fetchNextPage} hasMore={!!hasNextPage} loader={<h1>Posts are loading</h1>} endMessage={<h1>All posts loaded</h1>} >
+        {allPosts.map(post=>(
+            <Post post={post} key={post.id} />
+        ))}
+    </InfiniteScroll>
 };

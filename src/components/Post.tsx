@@ -4,31 +4,16 @@ import PostInfo from './PostInfo';
 import PostInteraction from './PostInteraction';
 import Video from './Video';
 import Link from 'next/link';
+import { Post as PostType } from '@prisma/client';
+import { format } from 'timeago.js';
 
-interface FileDetailsResponseTypes {
-	width: number;
-	height: number;
-	filePath: string;
-	url: string;
-	fileType: string;
-	customMetadata: { sensitive: boolean };
-}
-
-const Post = async ({ type }: { type?: 'status' | 'comment' }) => {
-	const getFileDetails = async (
-		fileId: string
-	): Promise<FileDetailsResponseTypes> => {
-		return new Promise((resolve, reject) => {
-			imageKit.getFileDetails(fileId, (err: any, result) => {
-				if (err) reject(err);
-				else resolve(result as unknown as FileDetailsResponseTypes);
-			});
-		});
-	};
-
-	const fileDetails = await getFileDetails('687b5ba55c7cd75eb8fcc152');
-	// console.log(fileDetails)
-
+const Post = ({
+	type,
+	post,
+}: {
+	type?: 'status' | 'comment';
+	post: PostType;
+}) => {
 	return (
 		<div className="p-4 border-y-[1px] border-borderGray">
 			<div className="flex items-center gap-2 text-sm text-textGray mb-2 font-bold">
@@ -76,37 +61,25 @@ const Post = async ({ type }: { type?: 'status' | 'comment' }) => {
 								<h1 className="text-md font-bold">suraj sonkar</h1>
 								<span className="text-textGray">@msurajhu</span>
 								{type !== 'status' && (
-									<span className="text-textGray">1 day ago</span>
+									<span className="text-textGray">
+										{format(post.createdAt)}
+									</span>
 								)}
 							</div>
 						</Link>
 						<PostInfo />
 					</div>
-					<Link href={"surajvsonkar/status/123"}>
+					<Link href={'surajvsonkar/status/123'}>
 						<p className={`${type === 'status' && 'text-lg'}`}>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-							quasi, pariatur temporibus aliquid velit deleniti, quas ipsam
-							deserunt eos officia esse amet labore natus repellat nihil!
-							Necessitatibus nostrum laborum quaerat?
+							{post.description}
 						</p>
 					</Link>
-					{/* <Image path={fileDetails.filePath} alt="" width={600} height={600} className={fileDetails.customMetadata.sensitive ? " blur-md" : ""} />
-					<PostInteraction /> */}
-					{fileDetails && fileDetails.fileType === 'image' ? (
-						<Image
-							path={fileDetails.filePath}
-							width={fileDetails.width}
-							height={fileDetails.height}
-							alt=""
-							className={fileDetails.customMetadata.sensitive ? ' blur-md' : ''}
-						/>
-					) : (
-						<Video
-							path={fileDetails.filePath}
-							className={fileDetails.customMetadata.sensitive ? ' blur-md' : ''}
-						/>
+					{post.img && (
+						<Image path={post.img} alt="" width={600} height={600} />
 					)}
-					{type === "status" && <span className='text-textGray'>12:31 AM - Jul 21, 2025</span>}
+					{type === 'status' && (
+						<span className="text-textGray">12:31 AM - Jul 21, 2025</span>
+					)}
 					<PostInteraction />
 				</div>
 			</div>

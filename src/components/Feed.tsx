@@ -37,7 +37,7 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
 			{posts.map((post) => {
 				return (
 					<div key={post.id}>
-						<Post />
+						<Post post={post} />
 					</div>
 				);
 			})}
