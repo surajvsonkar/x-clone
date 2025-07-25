@@ -8,9 +8,9 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
 	if (!userId) return;
 
 	const whereCondition = userProfileId
-		? {parentPostId: null, userId: userProfileId }
+		? { parentPostId: null, userId: userProfileId }
 		: {
-			parentPostId: null,
+				parentPostId: null,
 				userId: {
 					in: [
 						userId,
@@ -19,19 +19,73 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
 								where: { followerId: userId },
 								select: { followingId: true },
 							})
-						).map((follow)=> follow.followingId),
+						).map((follow) => follow.followingId),
 					],
 				},
-		};
+		  };
 
-		const posts = await prisma.post.findMany({
-			where: whereCondition,
-			take: 3,
-			skip: 0,
-			orderBy: {createdAt: "desc"}
-		});
+	const posts = await prisma.post.findMany({
+		where: whereCondition,
+		include: {
+			user: {
+				select: {
+					displayName: true,
+					username: true,
+					img: true,
+				},
+			},
+			rePost: {
+				include: {
+					user: {
+						select: { displayName: true, username: true, img: true },
+					},
+					_count: {
+						select: {
+							likes: true,
+							rePosts: true,
+							comments: true,
+						},
+					},
+					likes: {
+						where: {
+							userId: userId,
+						},
+						select: {
+							id: true,
+						},
+					},
+					rePosts: {
+						where: { userId: userId },
+						select: { id: true },
+					},
+				},
+			},
+			_count: {
+				select: {
+					likes: true,
+					rePosts: true,
+					comments: true,
+				},
+			},
+			likes: {
+				where: {
+					userId: userId,
+				},
+				select: {
+					id: true,
+				},
+			},
+			rePosts: {
+				where: { userId: userId },
+				select: { id: true },
+			},
+		},
+		take: 3,
+		skip: 0,
+		orderBy: { createdAt: 'desc' },
+	});
 
-		console.log(posts)
+	console.log(posts);
 	return (
 		<div className="">
 			{posts.map((post) => {
@@ -41,7 +95,7 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
 					</div>
 				);
 			})}
-			<InfiniteFeed/>
+			<InfiniteFeed />
 		</div>
 	);
 };
