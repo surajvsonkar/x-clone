@@ -1,20 +1,21 @@
 import LeftBar from '@/components/LeftBar';
 import './globals.css';
 import RightBar from '@/components/RightBar';
-import {ClerkProvider} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs';
+import QueryProvider from './providers/QueryProvider';
 
 export default function RootLayout({
-    children
+	children,
 }: Readonly<{
-    children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-    return (
-        <ClerkProvider>
-            <html lang="en">
-                <body>
-                    {children}
-                </body>
-            </html>
-        </ClerkProvider>
-    );
+	return (
+		<ClerkProvider>
+			<QueryProvider>
+				<html lang="en">
+					<body>{children}</body>
+				</html>
+			</QueryProvider>
+		</ClerkProvider>
+	);
 }
