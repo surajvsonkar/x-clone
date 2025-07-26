@@ -63,6 +63,10 @@ export async function GET(request: NextRequest) {
 						where: { userId: userId },
 						select: { id: true },
 					},
+					saves: {
+						where: {userId: userId},
+						select: {id: true}
+					}
 				},
 			},
 			_count: {
@@ -75,6 +79,12 @@ export async function GET(request: NextRequest) {
 			likes: {where: {userId: userId},select: {id: true}},
 			rePosts: {
 				where: {userId: userId},select:{id:true}
+			},
+			saves: {
+				where: {
+					userId: userId
+				},
+				select: {id: true}
 			}
 		},
 		take: LIMIT,

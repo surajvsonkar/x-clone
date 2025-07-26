@@ -1,11 +1,13 @@
 const PostInteraction = ({
 	count,
 	isLiked,
-	isReposted
+	isReposted,
+	isSaved
 }: {
 	count: { likes: number; rePosts: number; comments: number };
 	isLiked: boolean,
-	isReposted: boolean
+	isReposted: boolean,
+	isSaved: boolean
 }) => {
 	return (
 		<div className="flex items-center justify-between gap-4 lg:gap-16 my-2 text-textGray">
@@ -32,11 +34,11 @@ const PostInteraction = ({
 						viewBox="0 0 24 24"
 					>
 						<path
-							className="fill-textGray group-hover:fill-iconGreen"
+							className={`${isReposted ? "fill-iconGreen" : "fill-textGray"} group-hover:fill-iconGreen`}
 							d="M4.75 3.79l4.603 4.3-1.706 1.82L6 8.38v7.37c0 .97.784 1.75 1.75 1.75H13V20H7.75c-2.347 0-4.25-1.9-4.25-4.25V8.38L1.853 9.91.147 8.09l4.603-4.3zm11.5 2.71H11V4h5.25c2.347 0 4.25 1.9 4.25 4.25v7.37l1.647-1.53 1.706 1.82-4.603 4.3-4.603-4.3 1.706-1.82L18 15.62V8.25c0-.97-.784-1.75-1.75-1.75z"
 						/>
 					</svg>
-					<span className="text-sm group-hover:text-iconGreen">{count.rePosts}</span>
+					<span className={`${isReposted ? "text-iconGreen": "text-textGray"} text-sm group-hover:text-iconGreen`}>{count.rePosts}</span>
 				</div>
 				<div className="flex items-center gap-2 cursor-pointer group">
 					<svg
@@ -62,7 +64,7 @@ const PostInteraction = ({
 						viewBox="0 0 24 24"
 					>
 						<path
-							className="fill-textGray group-hover:fill-iconBlue"
+							className={`${isSaved ? "fill-iconBlue": "fill-textGray"} group-hover:fill-iconBlue`}
 							d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"
 						/>
 					</svg>

@@ -58,6 +58,7 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
 						where: { userId: userId },
 						select: { id: true },
 					},
+					saves: {where: {userId: userId},select: {id: true}}
 				},
 			},
 			_count: {
@@ -79,13 +80,14 @@ const Feed = async ({ userProfileId }: { userProfileId?: string }) => {
 				where: { userId: userId },
 				select: { id: true },
 			},
+			saves: {where:{ userId: userId}, select: {id: true} }
 		},
 		take: 3,
 		skip: 0,
 		orderBy: { createdAt: 'desc' },
 	});
 
-	console.log(posts);
+	// console.log(posts);
 	return (
 		<div className="">
 			{posts.map((post) => {

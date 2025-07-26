@@ -28,6 +28,7 @@ type PostWithDetais = PostType & {
 			id: number
 		}[],
 		rePosts: {id:number}[]
+		saves: {id:number}[]
 	},
 	_count: {
 		likes: number,
@@ -36,6 +37,7 @@ type PostWithDetais = PostType & {
 	},
 	likes: {id:number}[],
 	rePosts: {id:number}[]
+	saves: {id:number}[]
 };
 
 
@@ -48,7 +50,6 @@ const Post = ({
 }) => {
 
 	const originalPost = post.rePost || post
-	console.log(originalPost.likes)
 	return (
 		<div className="p-4 border-y-[1px] border-borderGray">
 			{originalPost.rePostId && (
@@ -82,7 +83,8 @@ const Post = ({
 				</div>
 				<div className="flex-1 flex flex-col gap-2">
 					<div className="w-full flex justify-between">
-						<Link href={'/surajvsonkar'} className="flex gap-4">
+						<Link href={`/${originalPost.user
+							.username}`} className="flex gap-4">
 							
 								<div
 									className={`${
@@ -119,7 +121,9 @@ const Post = ({
 					{type === 'status' && (
 						<span className="text-textGray">12:31 AM - Jul 21, 2025</span>
 					)}
-					<PostInteraction count={originalPost._count} isLiked={!!(originalPost.likes && originalPost.likes.length)} isReposted={!!originalPost.rePosts.length}  />
+					<PostInteraction count={originalPost._count} isLiked={!!originalPost.likes.length} isReposted={!!originalPost.rePosts.length} isSaved={!!originalPost.saves
+						.length
+					}  />
 				</div>
 			</div>
 		</div>
