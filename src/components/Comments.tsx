@@ -1,11 +1,28 @@
 import Image from './Image';
 import Post from './Post';
+import { Post as PostType } from '@prisma/client';
 
-const Comments = () => {
+type commentWithDetails = PostType & {
+	user: { displayName: string; username: string; img: string | null };
+	_count: { likes: number; rePosts: number; comments: number };
+	likes: { id: number }[];
+	rePosts: { id: number }[];
+	saves: { id: number }[];
+};
+
+const Comments = ({
+	comments,
+	postId,
+	username,
+}: {
+	comments: commentWithDetails[];
+	postId: number;
+	username: string;
+}) => {
 	return (
 		<div>
 			<form className="flex items-center justify-between gap-4 p-4">
-				<div className='flex justify-center items-center gap-4'>
+				<div className="flex justify-center items-center gap-4">
 					<div className="relative w-10 h-10 rounded-full overflow-hidden">
 						<Image
 							path="general/avatar.png"
@@ -25,13 +42,11 @@ const Comments = () => {
 					Reply
 				</button>
 			</form>
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
+			{comments.map((comment) => (
+				<div key={comment.id}>
+					<Post post={comment} type='comment' />
+				</div>
+			))}
 		</div>
 	);
 };
