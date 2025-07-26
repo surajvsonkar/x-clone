@@ -3,7 +3,7 @@ import Post from './Post';
 import { Post as PostType } from '@prisma/client';
 
 type commentWithDetails = PostType & {
-	user: { displayName: string; username: string; img: string | null };
+	user: { displayName: string | null; username: string; img: string | null };
 	_count: { likes: number; rePosts: number; comments: number };
 	likes: { id: number }[];
 	rePosts: { id: number }[];

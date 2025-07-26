@@ -59,39 +59,71 @@ export default function SignUpPage() {
 							</svg>
 							Sign up with Apple
 						</Clerk.Connection>
-                        <div className='flex flex-col gap-4'>
-                            Sign up with Credentials
-                            <Clerk.Field name="emailAddress" className='flex flex-col gap-2'>
-                                <Clerk.Input placeholder='E-mail' className='py-2 px-6 rounded-full text-black w-72 placeholder:text-sm'/>
-                                <Clerk.FieldError className='text-red-300 text-sm'/>
-                            </Clerk.Field>
-                            <Clerk.Field name="password" className='flex flex-col gap-2'>
-                                <Clerk.Input placeholder='password' className='py-2 px-6 rounded-full text-black w-72 placeholder:text-sm'/>
-                                <Clerk.FieldError className='text-red-300 text-sm'/>
-                            </Clerk.Field>
-                            <SignUp.Captcha/>
-                            <SignUp.Action submit className='bg-iconBlue rounded-full p-2 text-white font-bold w-72 text-center'>
-                                Sign up
-                            </SignUp.Action>
-                        </div>
+						<div className="flex flex-col gap-4">
+							Sign up with Credentials
+							<Clerk.Field name="username">
+								<Clerk.Input
+									placeholder="username"
+									className="py-2 px-6 rounded-full text-black w-72 placeholder:text-sm"
+								/>
+								<Clerk.FieldError className="text-red-300 text-sm" />
+							</Clerk.Field>
+							<Clerk.Field name="emailAddress" className="flex flex-col gap-2">
+								<Clerk.Input
+									placeholder="E-mail"
+									className="py-2 px-6 rounded-full text-black w-72 placeholder:text-sm"
+								/>
+								<Clerk.FieldError className="text-red-300 text-sm" />
+							</Clerk.Field>
+							<Clerk.Field name="password" className="flex flex-col gap-2">
+								<Clerk.Input
+									placeholder="password"
+									className="py-2 px-6 rounded-full text-black w-72 placeholder:text-sm"
+								/>
+								<Clerk.FieldError className="text-red-300 text-sm" />
+							</Clerk.Field>
+							<SignUp.Captcha />
+							<SignUp.Action
+								submit
+								className="bg-iconBlue rounded-full p-2 text-white font-bold w-72 text-center"
+							>
+								Sign up
+							</SignUp.Action>
+						</div>
 					</SignUp.Step>
-                    <SignUp.Step name='continue' className='flex flex-col'>
-                        <Clerk.Field name='username'>
-                            <Clerk.Input placeholder='username' className='py-2 px-6 rounded-full text-black w-72 placeholder:text-sm'/>
-                            <Clerk.FieldError className='text-red-300 text-sm'/>
-                        </Clerk.Field>
-                        <SignUp.Action submit className='w-72 text-center text-iconBlue underline'>Continue</SignUp.Action>
-                    </SignUp.Step>
-                    <SignUp.Step name='verifications'>
-                        <SignUp.Strategy name='email_code'>
-                            <h1 className='text-sm mb-2'>Check your email</h1>
-                            <Clerk.Field name='code' className='flex flex-col gap-4'>
-                                <Clerk.Input placeholder='Verification code' className='py-2 px-6 rounded-full text-black w-72 placeholder:text-sm' />
-                                <Clerk.FieldError className='text-red-300 text-sm'/>
-                            </Clerk.Field>
-                            <SignUp.Action submit className='mt-2 underline text-iconBlue text-sm'>verify</SignUp.Action>
-                        </SignUp.Strategy>
-                    </SignUp.Step>
+					<SignUp.Step name="continue" className="flex flex-col">
+						<Clerk.Field name="username">
+							<Clerk.Input
+								placeholder="username"
+								className="py-2 px-6 rounded-full text-black w-72 placeholder:text-sm"
+							/>
+							<Clerk.FieldError className="text-red-300 text-sm" />
+						</Clerk.Field>
+						<SignUp.Action
+							submit
+							className="w-72 text-center text-iconBlue underline"
+						>
+							Continue
+						</SignUp.Action>
+					</SignUp.Step>
+					<SignUp.Step name="verifications">
+						<SignUp.Strategy name="email_code">
+							<h1 className="text-sm mb-2">Check your email</h1>
+							<Clerk.Field name="code" className="flex flex-col gap-4">
+								<Clerk.Input
+									placeholder="Verification code"
+									className="py-2 px-6 rounded-full text-black w-72 placeholder:text-sm"
+								/>
+								<Clerk.FieldError className="text-red-300 text-sm" />
+							</Clerk.Field>
+							<SignUp.Action
+								submit
+								className="mt-2 underline text-iconBlue text-sm"
+							>
+								verify
+							</SignUp.Action>
+						</SignUp.Strategy>
+					</SignUp.Step>
 					<div className="w-72 flex items-center gap-4">
 						<div className="h-px bg-borderGray flex-grow"></div>
 						<span className="text-textGrayLight">or</span>
