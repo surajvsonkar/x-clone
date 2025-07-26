@@ -110,7 +110,7 @@ const Post = ({
 						</Link>
 						<PostInfo />
 					</div>
-					<Link href={'surajvsonkar/status/123'}>
+					<Link href={`${originalPost.user.username}/status/${originalPost.id}`}>
 						<p className={`${type === 'status' && 'text-lg'}`}>
 							{originalPost.description}
 						</p>
