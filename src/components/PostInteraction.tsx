@@ -1,6 +1,6 @@
 'use client';
 
-import { LikePost } from '@/action';
+import { LikePost, rePost, savePost } from '@/action';
 import { useOptimistic, useState } from 'react';
 
 const PostInteraction = ({
@@ -26,15 +26,38 @@ const PostInteraction = ({
 	});
 
 	const likeAction = async () => {
-		addOptimisticCount("like")
+		addOptimisticCount('like');
 		await LikePost(postId);
-		setState(prev=>{
+		setState((prev) => {
 			return {
 				...prev,
 				likes: prev.isLiked ? prev.likes - 1 : prev.likes + 1,
-				isLiked: !prev.isLiked
-			}
-		})
+				isLiked: !prev.isLiked,
+			};
+		});
+	};
+
+	const rePostAction = async () => {
+		addOptimisticCount('rePosts');
+		await rePost(postId);
+		setState((prev) => {
+			return {
+				...prev,
+				reposts: prev.isReposted ? prev.reposts - 1 : prev.reposts + 1,
+				isReposted: !prev.isReposted,
+			};
+		});
+	};
+
+	const saveAction = async () => {
+		addOptimisticCount('save');
+		await savePost(postId);
+		setState((prev) => {
+			return {
+				...prev,
+				isSaved: !prev.isSaved,
+			};
+		});
 	};
 
 	const [optimisticCount, addOptimisticCount] = useOptimistic(
@@ -82,28 +105,32 @@ const PostInteraction = ({
 						{optimisticCount.comments}
 					</span>
 				</div>
-				<div className="flex items-center gap-2 cursor-pointer group">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-					>
-						<path
+				<form action={rePostAction}>
+					<button className="flex items-center gap-2 cursor-pointer group">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+						>
+							<path
+								className={`${
+									optimisticCount.isReposted
+										? 'fill-iconGreen'
+										: 'fill-textGray'
+								} group-hover:fill-iconGreen`}
+								d="M4.75 3.79l4.603 4.3-1.706 1.82L6 8.38v7.37c0 .97.784 1.75 1.75 1.75H13V20H7.75c-2.347 0-4.25-1.9-4.25-4.25V8.38L1.853 9.91.147 8.09l4.603-4.3zm11.5 2.71H11V4h5.25c2.347 0 4.25 1.9 4.25 4.25v7.37l1.647-1.53 1.706 1.82-4.603 4.3-4.603-4.3 1.706-1.82L18 15.62V8.25c0-.97-.784-1.75-1.75-1.75z"
+							/>
+						</svg>
+						<span
 							className={`${
-								optimisticCount.isReposted ? 'fill-iconGreen' : 'fill-textGray'
-							} group-hover:fill-iconGreen`}
-							d="M4.75 3.79l4.603 4.3-1.706 1.82L6 8.38v7.37c0 .97.784 1.75 1.75 1.75H13V20H7.75c-2.347 0-4.25-1.9-4.25-4.25V8.38L1.853 9.91.147 8.09l4.603-4.3zm11.5 2.71H11V4h5.25c2.347 0 4.25 1.9 4.25 4.25v7.37l1.647-1.53 1.706 1.82-4.603 4.3-4.603-4.3 1.706-1.82L18 15.62V8.25c0-.97-.784-1.75-1.75-1.75z"
-						/>
-					</svg>
-					<span
-						className={`${
-							optimisticCount.isReposted ? 'text-iconGreen' : 'text-textGray'
-						} text-sm group-hover:text-iconGreen`}
-					>
-						{optimisticCount.reposts}
-					</span>
-				</div>
+								optimisticCount.isReposted ? 'text-iconGreen' : 'text-textGray'
+							} text-sm group-hover:text-iconGreen`}
+						>
+							{optimisticCount.reposts}
+						</span>
+					</button>
+				</form>
 				<form action={likeAction}>
 					<button className="flex items-center gap-2 cursor-pointer group">
 						<svg
@@ -130,21 +157,24 @@ const PostInteraction = ({
 				</form>
 			</div>
 			<div className="flex items-center gap-2">
-				<div className="cursor-pointer group">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-					>
-						<path
-							className={`${
-								optimisticCount.isSaved ? 'fill-iconBlue' : 'fill-textGray'
-							} group-hover:fill-iconBlue`}
-							d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"
-						/>
-					</svg>
-				</div>
+				<form action={saveAction}>
+					<button className="cursor-pointer group">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							className='fill-iconBlue'
+						>
+							<path
+								className={`${
+									optimisticCount.isSaved ? 'fill-iconBlue' : 'fill-textGray'
+								} group-hover:fill-iconBlue`}
+								d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"
+							/>
+						</svg>
+					</button>
+				</form>
 				<div className="cursor-pointer group">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
