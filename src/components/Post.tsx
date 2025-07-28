@@ -47,6 +47,7 @@ const Post = ({
 	type?: 'status' | 'comment';
 	post: PostWithDetais;
 }) => {
+	
 	const originalPost = post.rePost || post;
 	return (
 		<div className="p-4 border-y-[1px] border-borderGray">

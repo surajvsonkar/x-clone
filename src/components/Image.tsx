@@ -4,7 +4,8 @@ import { IKImage } from "imagekitio-next"
 const urlEndPoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
 
 interface imageType {
-    path: string,
+    path?: string,
+    src?:string
     height?: number,
     width?: number,
     alt: string,
@@ -12,9 +13,9 @@ interface imageType {
     tr?: boolean;
 }
 
-const Image = ({path,height,width,alt,className,tr}: imageType) => {
+const Image = ({path,src,height,width,alt,className,tr}: imageType) => {
   return (
-    <IKImage urlEndpoint={urlEndPoint} path={path} {...(tr
+    <IKImage urlEndpoint={urlEndPoint} src={src} path={path} {...(tr
         ? { transformation: [{ width: `${width}`, height: `${height}` }] }
         : { width: width, height: height })} alt={alt} className={className}  />
   )
