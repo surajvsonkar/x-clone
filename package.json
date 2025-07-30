@@ -2,10 +2,11 @@
 	"name": "xui",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
-		"dev": "next dev",
+		"dev": "node server.js",
 		"build": "next build",
-		"start": "next start",
+		"start": "node server.js",
 		"lint": "next lint"
 	},
 	"dependencies": {
@@ -22,10 +23,13 @@
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-infinite-scroll-component": "^6.1.0",
+		"socket.io": "^4.8.1",
+		"socket.io-client": "^4.8.1",
 		"svix": "^1.69.0",
 		"timeago.js": "^4.0.2",
 		"timeagojs": "^1.0.0",
 		"ts-node": "^10.9.2",
+		"uuid": "^11.1.0",
 		"zod": "^4.0.10"
 	},
 	"devDependencies": {

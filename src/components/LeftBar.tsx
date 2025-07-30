@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Image from './Image';
+import Socket from './Socket';
+import Notification from './Notification';
 
 const menuList = [
 	{
@@ -14,12 +16,12 @@ const menuList = [
 		link: '/',
 		icon: 'explore.svg',
 	},
-	{
-		id: 3,
-		name: 'Notification',
-		link: '/',
-		icon: 'notification.svg',
-	},
+	// {
+	// 	id: 3,
+	// 	name: 'Notification',
+	// 	link: '/',
+	// 	icon: 'notification.svg',
+	// },
 	{
 		id: 4,
 		name: 'Messages',
@@ -72,20 +74,27 @@ const LeftBar = () => {
 					<Image path={'icons/logo.svg'} alt="logo" width={24} height={24} />
 				</Link>
 				<div className="flex flex-col gap-4">
-					{menuList.map((item) => (
-						<Link
-							className="rounded-full hover:bg-[#181818] flex p-2 items-center gap-4"
-							href={item.link}
-							key={item.id}
-						>
-							<Image
-								path={`icons/${item.icon}`}
-								alt={item.name}
-								width={24}
-								height={24}
-							/>
-							<span className="hidden xxl:inline">{item.name}</span>
-						</Link>
+					{menuList.map((item, i) => (
+						<>
+							{i == 2 && (
+								<div key="custom-item">
+									<Notification />
+								</div>
+							)}
+							<Link
+								className="rounded-full hover:bg-[#181818] flex p-2 items-center gap-4"
+								href={item.link}
+								key={item.id}
+							>
+								<Image
+									path={`icons/${item.icon}`}
+									alt={item.name}
+									width={24}
+									height={24}
+								/>
+								<span className="hidden xxl:inline">{item.name}</span>
+							</Link>
+						</>
 					))}
 				</div>
 				<Link
@@ -104,7 +113,12 @@ const LeftBar = () => {
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<div className="w-10 h-10 relative rounded-full overflow-hidden">
-						<Image path="/general/avatar.png" alt="msurajhu" width={100} tr={true} />
+						<Image
+							path="/general/avatar.png"
+							alt="msurajhu"
+							width={100}
+							tr={true}
+						/>
 					</div>
 					<div className="hidden xxl:flex flex-col">
 						<span className="font-bold ">msurajhu</span>
@@ -113,6 +127,7 @@ const LeftBar = () => {
 				</div>
 				<div className="hidden xxl:block cursor-pointer font-bold">...</div>
 			</div>
+			<Socket />
 		</div>
 	);
 };
