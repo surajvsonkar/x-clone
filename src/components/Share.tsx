@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import Image from './Image';
 import NextImage from 'next/image';
 import { shareAction } from '@/actions';
 import ImageEditor from './ImageEditor';
+import { success } from 'zod';
+import { error } from 'console';
+import { useUser } from '@clerk/nextjs';
+import { addPost } from '@/action';
 
 const Share = () => {
 	const [media, setMedia] = useState<File | null>(null);
@@ -31,19 +35,40 @@ const Share = () => {
 
 	const previewUrl = media ? URL.createObjectURL(media) : null;
 
+	const { user } = useUser();
+
+	const [state, formAction, isPending] = useActionState(addPost, {
+		success: false,
+		error: false,
+	});
+
+	const formRef = useRef<HTMLFormElement | null>(null)
+
+	useEffect(()=> {
+		if(state.success) formRef.current?.reset()
+	}, [state])
+
 	return (
-		<form className="p-4 flex gap-4" onSubmit={handleSubmit}>
+		<form ref={formRef} className="p-4 flex gap-4" action={formAction}>
 			<div className="relative w-10 h-10 rounded-full overflow-hidden">
-				<Image
-					path="general/avatar.png"
-					alt=""
-					width={100}
-					height={100}
-					tr={true}
-				/>
+				<Image src={user?.imageUrl} alt="" width={100} height={100} tr={true} />
 			</div>
 
 			<div className="flex-1 flex flex-col gap-4">
+				<input
+					type="text"
+					name="imgType"
+					value={settings.type}
+					hidden
+					readOnly
+				/>
+				<input
+					type="text"
+					name="isSensitive"
+					value={settings.sensitive ? 'true' : 'false'}
+					hidden
+					readOnly
+				/>
 				<input
 					name="desc"
 					type="text"
@@ -153,9 +178,10 @@ const Share = () => {
 							className="cursor-pointer"
 						/>
 					</div>
-					<button className="bg-white text-black rounded-full py-2 px-4 font-bold">
-						Post
+					<button className="bg-white text-black rounded-full py-2 px-4 font-bold disabled:cursor-not-allowed" disabled={isPending}>
+						{isPending ? "posting": "post"}
 					</button>
+					{state.error && <span className='text-red-300 p-4'>Something went wrong!</span>}
 				</div>
 			</div>
 		</form>
